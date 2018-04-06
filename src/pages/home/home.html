@@ -1,0 +1,49 @@
+<ion-header class="shrinkable">
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-icon class="search-icon" name="search"></ion-icon>
+      <ion-searchbar [hidden]="searchIsHidden"
+      [(ngModel)]="myInput"
+      [showCancelButton]="shouldShowCancel"
+      (ionInput)="onInput($event)"
+      (ionCancel)="onCancel($event)">
+    </ion-searchbar>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div id="drawpoly">
+    <a href=""><ion-icon name="create"></ion-icon></a>
+  </div>
+
+  <div id="stopDrawing">
+    <a href=""><ion-icon name="close"></ion-icon></a>
+  </div>
+
+  <div class="map-container">
+    <button #shrinkmapBtn class="shrinkmap-btn" (click)="toggleMap()">
+      <ion-icon name="md-arrow-round-back"></ion-icon>
+    </button>
+
+    <div #map id="map"></div>   
+  </div>
+
+    <!-- <div #businesses class="businesses">
+       <ion-card ion-item *ngFor="let item of items; let i = index" (click)="itemSelected(item)">
+          <div class="card-title"><h1>{{ item.name }}</h1></div>
+
+          <ion-item class="walk-item">
+            <span item-left>  
+              {{ item.sort[0] | fixed:2 }} <span class="miles">miles</span>
+            </span>
+          </ion-item>
+          <div class="right-arrow-container">
+            <ion-icon name="ios-arrow-forward"></ion-icon>
+          </div>
+      </ion-card>
+    </div> -->
+</ion-content>

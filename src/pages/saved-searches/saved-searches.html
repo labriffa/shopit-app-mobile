@@ -1,0 +1,21 @@
+<!--
+  Generated template for the SavedSearchesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+  	<ion-buttons start>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Saved Searches</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-input style="border: 1px solid black; padding: 10px;"  [(ngModel)]="query" type="text"></ion-input>
+	<button style="padding: 30px" (click)="saveQuery()">Save Query</button>
+</ion-content>

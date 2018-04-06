@@ -1,0 +1,584 @@
+page-stores {
+    .toolbar-background {
+        background: #fff;
+    }
+
+    #map {
+        position: absolute !important;
+        top: 0;
+
+        display: block;
+        width: 100%;
+        height: 100vh;
+
+        opacity: 1;
+    }
+
+    .businesses {
+        position: relative;
+        z-index: 999;
+
+        height: 100%;
+        padding-top: 30px;
+
+        -webkit-transition: margin-top .5s;
+                transition: margin-top .5s;
+        transform: translateY(-20px);
+    }
+
+    .searchbar-search-icon {
+        display: none;
+    }
+
+    .card img {
+        display: block;
+        width: 100%;
+        height: 130px;
+
+        object-fit: cover;
+    }
+
+    .address {
+        color: white;
+    }
+
+    .search-btn {
+        color: black !important;
+    }
+
+    .map-overlay {
+        position: absolute;
+        top: 0;
+        z-index: 999;
+
+        display: block;
+        width: 100%;
+        height: 100vh;
+
+        background: transparent;
+    }
+
+    [hidden] {
+        display: none !important;
+    }
+
+    .walk-item {
+        min-height: 2.5em;
+    }
+
+    .walk-icon {
+        margin-left: 5px;
+
+        font-size: 15px !important;
+    }
+
+    [title="Click to see this area on Google Maps"] {
+        display: none !important;
+    }
+
+    .logo {
+        display: block;
+        float: left;
+        width: 100px;
+        max-width: 71px;
+        margin: 0 auto;
+        margin-left: 9px;
+
+        filter: brightness(0);
+    }
+
+    .right-buttons {
+        padding-right: 15px;
+
+        color: white;
+
+        span {
+            margin-left: 5px;
+        }
+    }
+
+    .miles {
+        color: #ffc108;
+    }
+
+    .scroll-content {
+        overflow-y: auto;
+
+        background: #f0f0f0 ;
+    }
+
+    .toggle-view .list,
+    .toggle-view .map {
+        float: left;
+        width: 50%;
+        padding: 10px 0;
+
+        line-height: 2;
+
+        text-align: center;
+
+        color: white;
+        background: #383838;
+    }
+
+    .toggle-view .map {
+        background: #6b6b6b;
+    }
+
+    .miles-range .item {
+        min-height: 50px;
+
+        background: #0076ab;
+
+        .label {
+            font-size: 13px;
+        }
+    }
+
+    .miles-range .label {
+        color: white;
+    }
+
+    .range-md-secondary .range-bar-active,
+    .range-md-secondary .range-knob,
+    .range-md-secondary .range-pin,
+    .range-md-secondary .range-pin::before {
+        background: white;
+    }
+
+    .range-md .range-knob-min.range-knob-min .range-knob {
+        border-color: white;
+    }
+
+    .hamburger-menu {
+        margin-left: 15px;
+
+        color: white;
+    }
+
+    .card {
+        width: auto;
+        margin: 5px 10px;
+
+        color: white;
+        border-top: 0;
+        border-right: 0;
+        border-left: 0;
+        border-radius: 10px;
+        background: white;
+        -webkit-box-shadow: 0 2px 4px 0 #e0e0e0;
+                box-shadow: 0 2px 4px 0 #3b3e3e;
+    }
+
+    ion-item.walk-item.item.item-block.item-md {
+        padding-left: 0;
+    }
+
+    .card-image {
+        float: left;
+        max-width: 60px;
+        margin: 15px;
+        margin-left: 0;
+    }
+
+    .card span {
+        font-size: 12px;
+
+        color: rgba(255,256,256,.7);
+    }
+
+    .card button span,
+    .card button .icon {
+        font-size: 13px;
+    }
+
+    .card h2 {
+        display: inline;
+        margin-left: 5px;
+        margin-left: 20px;
+
+        font-size: 15px;
+
+        text-align: right;
+    }
+
+    .card .icon {
+        position: relative;
+        top: -5px;
+
+        margin-right: 5px;
+
+        font-size: 17px;
+
+        color: rgba(255,255,255,.3);
+    }
+
+    .right-arrow-container {
+        position: absolute;
+        /* font-size: 1px; */
+        top: 30px;
+        right: 0;
+        z-index: 5;
+
+        float: right;
+        margin-right: 13px;
+
+        .icon {
+            font-size: 28px;
+        }
+    }
+
+    .card-title {
+        width: 100%;
+        margin-top: 15px;
+        margin-left: 0;
+        overflow: auto;
+        box-sizing: border-box;
+
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 2;
+
+        h1 {
+            float: left;
+            margin-top: 5px;
+
+            font-size: 15px;
+            font-weight: 700;
+
+            color: white;
+        }
+
+        .icon {
+            font-size: 14px;
+        }
+    }
+
+    .label-md {
+        margin: 0;
+    }
+
+    .item-block {
+        padding: 0 15px;
+    }
+
+    .searchbar-md .searchbar-input {
+        padding-left: 40px;
+
+        border-radius: 0;
+        background-color: #ecebeb;
+        box-shadow: none !important;
+    }
+
+    .toolbar .searchbar-md {
+        padding: 0 !important;
+    }
+
+    .toolbar .searchbar-md {
+        height: 56px !important;
+        padding: 10px !important;
+    }
+
+    .searchbar-md .searchbar-search-icon {
+        top: 18px;
+    }
+
+    .close-search,
+    .close-search:hover {
+        position: absolute;
+        top: 5px;
+        right: 7px;
+        z-index: 200;
+
+        color: #a7a7a7;
+        background: white !important;
+        box-shadow: none;
+    }
+
+    .item-md.item-block .item-inner {
+        padding-right: 0;
+
+        border: none;
+    }
+
+    .item-md {
+        font-weight: 700;
+
+        color: black;
+        background: #3e3b3b;
+    }
+
+    .item-md p {
+        margin: 0 0 2px;
+        margin-top: 8px;
+        overflow: inherit;
+
+        font-size: 1.3rem;
+        line-height: normal;
+
+        text-overflow: inherit;
+    }
+
+    .tabs-md .tab-button[aria-selected=true] .tab-button-icon {
+        border-bottom: 5px solid;
+    }
+
+    .content-drawer {
+        display: none;
+    }
+
+    .content-drawer .content {
+        padding: 20px;
+    }
+
+    .map-container {
+        position: relative;
+    }
+
+    .search-icon {
+        position: absolute;
+        top: 22px;
+        left: 27px;
+        z-index: 1;
+
+        font-size: 20px;
+
+        color: #939393;
+    }
+
+    ion-spinner svg {
+        stroke: blue;
+    }
+
+    .reset-map {
+        position: absolute;
+        top: 304px;
+        left: 0;
+        left: 5%;
+        z-index: 9999;
+
+        width: 44%;
+        height: 38px;
+        padding: 10px 30px;
+        margin-bottom: 55px;
+
+        font-size: 13px;
+        font-size: 11px;
+        font-weight: 700;
+
+        letter-spacing: 1px;
+        text-transform: uppercase;
+
+        color: #fff;
+        border-radius: 5px;
+        background: #454547;
+    }
+
+    .apply-polygon {
+        position: absolute;
+        top: 304px;
+        right: 5%;
+        z-index: 9999;
+
+        width: 44%;
+        height: 38px;
+        padding: 10px 30px;
+        /* margin: 15px; */
+        margin-bottom: 55px;
+
+        font-size: 13px;
+        font-size: 11px;
+        font-weight: 700;
+
+        letter-spacing: 1px;
+        text-transform: uppercase;
+
+        color: #fff;
+        border-radius: 0;
+        border-radius: 50px;
+        /* border: 2px solid #51504f; */
+        border-radius: 0;
+        /* transform: skewX(-14deg); */
+        border-radius: 5px;
+        background: #ff5722;
+    }
+
+    #stopDrawing,
+    #drawpoly {
+        width: 50px;
+        height: 50px;
+        margin: 10px;
+
+        line-height: 52px;
+
+        text-align: center;
+
+        a {
+            display: block;
+        }
+    }
+
+    #stopDrawing.display-none {
+        display: none;
+    }
+
+    #stopDrawing.display {
+        display: block;
+    }
+
+    #stopDrawing {
+        position: absolute;
+        top: auto;
+        bottom: 55px;
+        left: 0;
+        z-index: 99999;
+
+        font-size: 18px;
+
+        border-radius: 5px;
+        background: #545454;
+    }
+
+    #drawpoly {
+        position: absolute;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        z-index: 99999;
+
+        font-size: 18px;
+
+        border-radius: 5px;
+        background: #545454;
+    }
+
+    #drawpoly.inactive {
+        background: #545454;
+    }
+
+    #drawpoly.active {
+        background: #009688;
+    }
+
+    .shrinkmap-btn {
+        position: absolute;
+        top: 20px;
+        left: -100px;
+        z-index: 999;
+
+        display: block;
+        width: 40px;
+        height: 40px;
+
+        font-size: 20px;
+
+        -webkit-transition: all .5s;
+                transition: all .5s;
+
+        color: white;
+        border-radius: 50px;
+        background: #5e5e5e;
+    }
+
+    #map [title="Toggle fullscreen view"] {
+        display: none;
+    }
+
+    #map [title="Stop drawing"] {
+        position: absolute !important;
+        left: 50px;
+
+        display: block;
+        margin: 15px !important;
+
+        transition: opacity .2s;
+
+        opacity: 0;
+        background: #6d6d6d !important;
+
+        img {
+            display: none;
+        }
+
+        span > div {
+            height: initial !important;
+        }
+
+        & span:after {
+            display: inline-block;
+            padding: 15px 10px !important;
+
+            font-family: "Ionicons";
+            font-size: 15px;
+
+            content: "\f304";
+
+            color: white;
+        }
+
+        &[aria-pressed="false"] {
+            background: #9c9c9c !important;
+        }
+    }
+
+    ion-card.item.item-block.card.card-md.item-md {
+        padding: 0;
+        margin-bottom: 0;
+
+        border: 1px solid #cecece;
+        background: #e8e8e8;
+        box-shadow: 0 0 5px #dcd3d3;
+    }
+
+    #map .gm-style-cc {
+        display: none;
+    }
+
+    #map [title="Draw a shape"] {
+        position: absolute !important;
+        top: 0;
+        left: 30px !important;
+
+        display: block;
+        margin: 15px 80px !important;
+
+        transition: opacity .2s;
+
+        opacity: 0;
+        background: #6d6d6d !important;
+
+        img {
+            display: none;
+        }
+
+        span > div {
+            height: initial !important;
+        }
+
+        & span:after {
+            display: inline-block;
+            padding: 15px 10px !important;
+
+            font-family: "Ionicons";
+            font-size: 15px;
+
+            content: "\f2db";
+
+            color: white;
+        }
+
+        &[aria-pressed="false"] {
+            background: #9c9c9c !important;
+        }
+    }
+
+    #map .display,
+    #display {
+        opacity: 1;
+    }
+
+    #map .display-none,
+    #display-none {
+        opacity: 0;
+    }
+}
