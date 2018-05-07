@@ -5,6 +5,7 @@ import { SinglePage } from '../single/single';
 import { Shopit } from '../../providers/shopit/shopit';
 import { ShopitItems } from '../../providers/shopitems/shopitems';
 import { ShopitCoordinates } from '../../providers/shopit-coordinates/shopit-coordinates';
+import { SearchTermProvider } from '../../providers/search-term/search-term';
 import { Events, Platform } from 'ionic-angular';
 
 import 'rxjs/add/operator/map'
@@ -20,17 +21,15 @@ export class HomePage {
 	items: any;
 	myInput = '';
 	@ViewChild('map') mapElement: ElementRef;
-	markerCluster: any;
 	map: any;
 	mapMarkers: any[] = [];
 	overlays: any[] = [];
 	polys: any[] = [];
+    isDrawToolTip: boolean = false;
 
-	constructor(public navCtrl: NavController, private loading: LoadingController,
-		private geolocation: Geolocation, public platform: Platform,
-		private shopit: Shopit, public events: Events, private shopitems: ShopitItems, private shopitcoordinates: ShopitCoordinates) {
+	constructor(public navCtrl: NavController, private loading: LoadingController, private geolocation: Geolocation, public platform: Platform,
+		private shopit: Shopit, public events: Events, private searchTerm: SearchTermProvider, private shopitems: ShopitItems, private shopitcoordinates: ShopitCoordinates) {
 		this.initializeItems();
-        console.log('why :(');
 	}
 
     /**
@@ -38,7 +37,8 @@ export class HomePage {
      **/
      initializeItems() {
         // development values
-        if (this.platform.is('core') || this.platform.is('mobileweb')) {
+        if(1) {
+        //if (this.platform.is('core') || this.platform.is('mobileweb')) {
             this.shopitcoordinates.setLat(53.494542);
             this.shopitcoordinates.setLng(-2.271309);
             this.searchBusinesses();
@@ -59,10 +59,16 @@ export class HomePage {
         }        
     }
 
+    /**
+    * Publishes the number of stores
+    **/
     updateStoreBadge() {
     	this.events.publish('storeBadge:update', this.items.length);
     }
 
+    /**
+    * Publishes the list of stores found
+    **/
     updateStoreList() {
     	this.events.publish('storeList:update', this.items);
     }
@@ -94,6 +100,14 @@ export class HomePage {
 
      onCancel(event) {}
 
+     showDrawToolTip() {
+        this.isDrawToolTip = true;
+     }
+
+     hideDrawToolTip() {
+        this.isDrawToolTip = false;
+     }
+
     /**
      * Loads the map when this view has loaded
      **/
@@ -102,213 +116,149 @@ export class HomePage {
      }
 
     /**
-     * Intializes the map, setting styles and applies the drawing manager for polygon searching
+     * Intializes the map and sets styles
      **/
-     loadMap(){
+     loadMap() {
         // development values
-        if(this.platform.is('core') || this.platform.is('mobileweb')) {
+        if(1) {
+        //if(this.platform.is('core') || this.platform.is('mobileweb')) {
             let latLng = new google.maps.LatLng(this.shopitcoordinates.getLat(), this.shopitcoordinates.getLng());
-            let mapOptions = {
-                center: latLng,
-                zoom: 13,
-                streetViewControl: false,
-                mapTypeControl: false,
-                mapTypeId: google.maps.MapTypeId.ROADMAP,
-                gestureHandling: 'greedy',
-                styles: [
-                {
-                    "featureType": "administrative",
-                    "elementType": "geometry", 
-                    "stylers": [
-                    {
-                        "visibility": "off"
-                    }
-                    ]
-                },
-                {
-                    "featureType": "poi",
-                    "stylers": [
-                    {
-                        "visibility": "off"
-                    }
-                    ]
-                },
-                {
-                    "featureType": "road",
-                    "elementType": "labels.icon",
-                    "stylers": [
-                    {
-                        "visibility": "off"
-                    }
-                    ]
-                },
-                {
-                    "featureType": "transit",
-                    "stylers": [
-                    {
-                        "visibility": "off"
-                    }
-                    ]
-                }
-                ]
-            }
 
-            this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-
-
-            document.querySelector("#drawpoly a").addEventListener("click", (event) => {
-                event.preventDefault();
-
-                this.disable();
-
-                document.querySelector("#drawpoly").className = "active";
-                document.querySelector("#stopDrawing").className = "display";
-
-                google.maps.event.addDomListener(this.map.getDiv(),'touchstart', (e) => {
-                    this.drawFreeHand()
-                });
-
-                google.maps.event.addDomListener(this.map.getDiv(),'mousedown', (e) => {
-                    this.drawFreeHand()
-                });
-            });
-
-
-            document.querySelector("#stopDrawing a").addEventListener("click", (event) => {
-                event.preventDefault();
-
-                for(var i = 0; i < this.polys.length; i++) {
-                    this.polys[i].setMap(null);
-                }
-
-                document.querySelector("#stopDrawing").className = "display-none";
-                document.querySelector("#drawpoly").className = "inactive";
-
-                this.searchBusinesses();
-                this.shopitcoordinates.setCoordinates([]);
-                this.enable();
-            });
-
-            let marker = new google.maps.Marker({
-                map: this.map,
-                animation: google.maps.Animation.DROP,
-                position: this.map.getCenter()
-            });
-
-            let content = "<h4>You are Here!</h4>";         
-
-            this.addInfoWindow(marker, content);
+            this.initializeMap(latLng);
+            
 
         } else {
             this.geolocation.getCurrentPosition().then((position) => {
 
-            let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
-            let mapOptions = {
-                center: latLng,
-                zoom: 13,
-                streetViewControl: false,
-                mapTypeControl: false,
-                mapTypeId: google.maps.MapTypeId.ROADMAP,
-                gestureHandling: 'greedy',
-                styles: [
-                {
-                    "featureType": "administrative",
-                    "elementType": "geometry", 
-                    "stylers": [
-                    {
-                        "visibility": "off"
-                    }
-                    ]
-                },
-                {
-                    "featureType": "poi",
-                    "stylers": [
-                    {
-                        "visibility": "off"
-                    }
-                    ]
-                },
-                {
-                    "featureType": "road",
-                    "elementType": "labels.icon",
-                    "stylers": [
-                    {
-                        "visibility": "off"
-                    }
-                    ]
-                },
-                {
-                    "featureType": "transit",
-                    "stylers": [
-                    {
-                        "visibility": "off"
-                    }
-                    ]
-                }
-                ]
-            }
-
-            this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-
-
-            document.querySelector("#drawpoly a").addEventListener("click", (event) => {
-                event.preventDefault();
-
-                this.disable();
-
-                document.querySelector("#drawpoly").className = "active";
-                document.querySelector("#stopDrawing").className = "display";
-
-                google.maps.event.addDomListener(this.map.getDiv(),'touchstart', (e) => {
-                    this.drawFreeHand()
-                });
-
-                google.maps.event.addDomListener(this.map.getDiv(),'mousedown', (e) => {
-                    this.drawFreeHand()
-                });
-            });
-
-
-            document.querySelector("#stopDrawing a").addEventListener("click", (event) => {
-                event.preventDefault();
-
-                for(var i = 0; i < this.polys.length; i++) {
-                    this.polys[i].setMap(null);
-                }
-
-                document.querySelector("#stopDrawing").className = "display-none";
-                document.querySelector("#drawpoly").className = "inactive";
-
-                this.searchBusinesses();
-                this.shopitcoordinates.setCoordinates([]);
-                this.enable();
-            });
-
-            let marker = new google.maps.Marker({
-                map: this.map,
-                animation: google.maps.Animation.DROP,
-                position: this.map.getCenter()
-            });
-
-            let content = "<h4>You are Here!</h4>";         
-
-            this.addInfoWindow(marker, content);
+                this.initializeMap(latLng);
 
             }, (err) => {
                 console.log(err);
             });
         }
-     }
+    }
 
+     /**
+     * Initializes map
+     **/
+     initializeMap(latLng) {
+        let mapOptions = {
+            center: latLng,
+            zoom: 14,
+            streetViewControl: false,
+            mapTypeControl: false,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            gestureHandling: 'greedy',
+            styles: [
+            {
+                "featureType": "administrative",
+                "elementType": "geometry", 
+                "stylers": [
+                {
+                    "visibility": "off"
+                }
+                ]
+            },
+            {
+                "featureType": "poi",
+                "stylers": [
+                {
+                    "visibility": "off"
+                }
+                ]
+            },
+            {
+                "featureType": "road",
+                "elementType": "labels.icon",
+                "stylers": [
+                {
+                    "visibility": "off"
+                }
+                ]
+            },
+            {
+                "featureType": "transit",
+                "stylers": [
+                {
+                    "visibility": "off"
+                }
+                ]
+            }
+            ]
+        }
+
+            // create the map
+            this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+
+            // handle draw poly selection
+            document.querySelector("#drawpoly a").addEventListener("click", (event) => {
+                event.preventDefault();
+
+                this.disableMap();
+                this.hideDrawToolTip();
+
+                // set default css classes
+                document.querySelector("#drawpoly").className = "active";
+                document.querySelector("#stopDrawing").className = "display";
+
+                // allow freehand on touchstart or mousedown (for desktops)
+                google.maps.event.addDomListener(this.map.getDiv(),'touchstart', (e) => {
+                    this.drawFreeHand()
+                });
+
+                google.maps.event.addDomListener(this.map.getDiv(),'mousedown', (e) => {
+                    this.drawFreeHand()
+                });
+            });
+
+
+            document.querySelector("#stopDrawing a").addEventListener("click", (event) => {
+                event.preventDefault();
+
+                // remove polygons from the map
+                for(let i = 0; i < this.polys.length; i++) {
+                    this.polys[i].setMap(null);
+                }
+
+                // hide stop drawing and re-enable start drawing
+                document.querySelector("#stopDrawing").className = "display-none";
+                document.querySelector("#drawpoly").className = "inactive";
+
+                // refresh businesses
+                this.searchBusinesses();
+
+                // re-apply coordinates
+                this.shopitcoordinates.setCoordinates([]);
+
+                // allow user to rescroll map
+                this.enableMap();
+            });
+
+            let marker = new google.maps.Marker({
+                map: this.map,
+                animation: google.maps.Animation.DROP,
+                position: this.map.getCenter()
+            });
+
+            let content = "<h4>You are Here!</h4>";         
+
+            this.addInfoWindow(marker, content);
+        }
+
+     /**
+     * Searches for businesses
+     **/
      searchBusinesses() {
 
      	this.removeMarkers();
 
-     	let loader = this.loading.create({
-     		content: 'Updating Store Entries...',
-     		cssClass: 'loadingwrapper'
-     	});
+        // apply loading dialog
+        let loader = this.loading.create({
+         content: 'Updating Store Entries...',
+         cssClass: 'loadingwrapper'
+     });
 
         // update the list of businesses according to the list of coordinates
         loader.present().then(() => {
@@ -324,47 +274,108 @@ export class HomePage {
         });
     }
 
+    /**
+    * Removes polygons from screen
+    **/
+    removeMapPolylines() {
+        for(let i = 0; i < this.polys.length; i++) {
+            this.polys[i].setMap(null);
+        }
+    }
+
+    createMapPolyline() {
+
+        const STROKE_BLUE = '#009688';
+        const FILL_BLUE = '#009688';
+
+        let poly = new google.maps.Polyline({
+            map:this.map,
+            clickable:false, 
+            strokeColor: STROKE_BLUE
+        });
+
+        return poly;
+    }
+
+    createMapPolygon(path) {
+
+        const STROKE_BLUE = '#009688';
+        const FILL_BLUE = '#009688';
+
+        let poly = new google.maps.Polygon({
+            map:this.map,path:path, 
+            strokeColor: STROKE_BLUE, 
+            fillColor: FILL_BLUE
+        });
+
+        return poly;
+    }
+
+    /**
+    * Removes listeners from the Google map so users can interact with map contents
+    **/
+    removeMapListeners() {
+        google.maps.event.clearListeners(this.map.getDiv(), 'touchstart');
+        google.maps.event.clearListeners(this.map.getDiv(), 'mousedown');
+    }
+
+    /**
+    * Provides freehand map drawing functionality
+    **/
     drawFreeHand() {
 
-    	for(var i = 0; i < this.polys.length; i++) {
-    		this.polys[i].setMap(null);
-    	}
+        this.removeMapPolylines();
 
-    	var poly = new google.maps.Polyline({map:this.map,clickable:false, strokeColor: "#009688"});
+    	let poly = this.createMapPolyline();
 
-    	var move = google.maps.event.addListener(this.map,'mousemove', (e) => {
+        // aggregate latitude and longitude objects to the prexisting polyline
+    	let move = google.maps.event.addListener(this.map,'mousemove', (e) => {
     		poly.getPath().push(e.latLng);
     	});
 
     	google.maps.event.addListenerOnce(this.map, 'mouseup', (e) => {
+
     		google.maps.event.removeListener(move);
-    		var path = poly.getPath();
-    		poly.setMap(null);
-    		poly = new google.maps.Polygon({map:this.map,path:path, strokeColor: "#009688", fillColor: "#009688"});
+            var path = poly.getPath();
+            poly.setMap(null);
+            poly = new google.maps.Polygon({map:this.map,path:path, strokeColor: "#009688", fillColor: "#009688"});
 
-    		google.maps.event.clearListeners(this.map.getDiv(), 'touchstart');
-    		google.maps.event.clearListeners(this.map.getDiv(), 'mousedown');
+            google.maps.event.clearListeners(this.map.getDiv(), 'touchstart');
+            google.maps.event.clearListeners(this.map.getDiv(), 'mousedown');
 
-    		var bounds = poly.getPath();
+            var bounds = poly.getPath();
 
-    		var coordinates = [];
+            var coordinates = [];
 
-    		bounds.forEach(function(xy, i) {
-    			coordinates.push({ "lat": xy.lat(), "lon": xy.lng() });
-    		});
+            bounds.forEach(function(xy, i) {
+                coordinates.push({ "lat": xy.lat(), "lon": xy.lng() });
+            });
 
-    		bounds.forEach((xy, i) => {
-    			this.polys.push(poly);
-    		});
+            bounds.forEach((xy, i) => {
+                this.polys.push(poly);
+            });
 
-    		this.applyPolygon(coordinates);
+            this.applyPolygonSearch(coordinates);
 
-    		this.enable();
+            this.enableMap();
     	})
     }
 
+    getCoordinatesFromBounds(bounds) {
 
-    disable() {
+        let coordinates = [];
+
+        bounds.forEach(function(xy, i) {
+            coordinates.push({ "lat": xy.lat(), "lon": xy.lng() });
+        });
+
+        return coordinates;
+    }
+
+    /**
+    * Disables scrolling of the map
+    **/
+    disableMap() {
     	this.map.setOptions({
     		draggable: false, 
     		zoomControl: false, 
@@ -374,7 +385,10 @@ export class HomePage {
     	});
     }
 
-    enable(){
+    /**
+    * Re-enables the map for scrolling
+    **/
+    enableMap(){
     	this.map.setOptions({
     		draggable: true, 
     		zoomControl: true, 
@@ -392,6 +406,7 @@ export class HomePage {
      	for (let i = 0; i < this.overlays.length; i++) {
      		this.overlays[i].overlay.setMap(null);
      	}
+
      	this.overlays = [];
      }
 
@@ -402,41 +417,55 @@ export class HomePage {
 
      	this.removeMarkers();
 
-     	for (var i = 0; i < this.items.length; i++) {
-     		var nearestLocationLat = this.items[i]._source.coordinates["lat"];
-     		var nearestLocationLng = this.items[i]._source.coordinates["lon"];
+     	for(let i = 0; i < this.items.length; i++) {
+     		let lat = this.items[i]._source.coordinates["lat"];
+     		let lng = this.items[i]._source.coordinates["lon"];
 
-     		var nearestLocation = new google.maps.LatLng(nearestLocationLat, nearestLocationLng);
+     		let latLng = new google.maps.LatLng(lat, lng);
 
-     		let marker = new google.maps.Marker({
-     			map: this.map,
-     			position: nearestLocation,
-     			icon: {
-     				url: 'https://maps.gstatic.com/mapfiles/place_api/icons/shopping-71.png',
-     				scaledSize: new google.maps.Size(35, 35)
-     			}
-     		});
+     		let mapMarker = this.generateMapMarker(latLng);
 
-     		this.mapMarkers.push(marker);
+     		this.mapMarkers.push(mapMarker);
 
-     		let content = "<strong>" + this.items[i].name + "</strong>";
-     		content += "<p>" + this.items[i]._source.address + "</p>"
+            let title = this.items[i].name;
+            let body = this.items[i]._source.address
+            let content = this.generateMapContent(title, body);
 
-     		this.addInfoWindow(marker, content);
+     		this.addInfoWindow(mapMarker, content);
      	}
+     }
+
+     generateMapMarker(latLng) {
+        let marker = new google.maps.Marker({
+            map: this.map,
+            position: latLng,
+            icon: {
+                url: 'https://maps.gstatic.com/mapfiles/place_api/icons/shopping-71.png',
+                scaledSize: new google.maps.Size(30, 30)
+            }
+        });
+
+        return marker;
+     }
+
+     generateMapContent(title, body) {
+        let content = "<strong>" + title + "</strong>";
+            content += "<p>" + body + "</p>";
+
+        return content;
      }
 
     /**
      * Applies polygon searching to search for businesses within a user defined region
      **/
-     applyPolygon(coordinates) {
+     applyPolygonSearch(coordinates) {
 
         this.shopitcoordinates.setCoordinates(coordinates);
 
-     	let loader = this.loading.create({
-     		content: 'Updating Store Entries...',
-     		cssClass: 'loadingwrapper'
-     	});
+        let loader = this.loading.create({
+         content: 'Updating Store Entries...',
+         cssClass: 'loadingwrapper'
+     });
 
         // update the list of businesses according to the list of coordinates
         loader.present().then(() => {
@@ -470,9 +499,17 @@ export class HomePage {
      * Removes all markers from the screen
      **/
      removeMarkers() {
-     	console.log(this.mapMarkers.length);
      	for (let i = 0; i < this.mapMarkers.length; i++) {
      		this.mapMarkers[i].setMap(null);
      	}
+     }
+
+     login() {
+        this.navCtrl.push('LoginPage');
+     }
+
+     stores() {
+        this.searchTerm.set(this.myInput);
+        this.navCtrl.parent.select(2); 
      }
  }

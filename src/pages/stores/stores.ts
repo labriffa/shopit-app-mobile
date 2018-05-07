@@ -21,10 +21,6 @@ export class StoresPage {
 		this.items = this.shopitems.get();
 	}
 
-    itemSelected(item) {
-        this.navCtrl.push('LoginPage');
-    }
-
   	 /**
      * Updates the list of shown businesses based on the users' search query
      **/

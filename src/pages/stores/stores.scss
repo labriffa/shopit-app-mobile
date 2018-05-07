@@ -14,6 +14,34 @@ page-stores {
         opacity: 1;
     }
 
+    svg {
+        width: 50%;
+        margin: 0 25%;
+
+        text-align: center;
+
+        fill: #ecebeb;
+    }
+
+    .wrap {
+        display: flex;
+        height: 100%;
+
+        align-items: center;
+        -webkit-box-align: center;
+        -webkit-box-pack: center;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .no-results-found {
+        width: 100%;
+
+        text-align: center;
+
+        color: #484747;
+    }
+
     .businesses {
         position: relative;
         z-index: 999;
@@ -39,6 +67,13 @@ page-stores {
     }
 
     .address {
+        display: block;
+        float: left;
+        padding: 5px 0;
+        margin-left: 18px;
+
+        white-space: normal;
+
         color: white;
     }
 
@@ -156,15 +191,19 @@ page-stores {
         color: white;
     }
 
+    .card:first-child {
+        margin-top: 15px !important;
+    }
+
     .card {
         width: auto;
         margin: 5px 10px;
+        margin-bottom: 15px !important;
 
         color: white;
         border-top: 0;
         border-right: 0;
         border-left: 0;
-        border-radius: 10px;
         background: white;
         -webkit-box-shadow: 0 2px 4px 0 #e0e0e0;
                 box-shadow: 0 2px 4px 0 #3b3e3e;
@@ -182,7 +221,7 @@ page-stores {
     }
 
     .card span {
-        font-size: 12px;
+        font-size: 13px;
 
         color: rgba(255,256,256,.7);
     }
@@ -228,9 +267,9 @@ page-stores {
         }
     }
 
+
     .card-title {
         width: 100%;
-        margin-top: 15px;
         margin-left: 0;
         overflow: auto;
         box-sizing: border-box;
@@ -241,12 +280,19 @@ page-stores {
 
         h1 {
             float: left;
+            width: 100%;
+            height: 40px;
+            padding-left: 20px;
             margin-top: 5px;
+            margin-top: 0;
 
-            font-size: 15px;
-            font-weight: 700;
+            font-size: 16px;
+            font-weight: 400;
+            /* text-align: center; */
+            line-height: 40px;
 
-            color: white;
+            color: #036f64;
+            background: white;
         }
 
         .icon {
@@ -259,8 +305,9 @@ page-stores {
     }
 
     .item-block {
-        padding: 0 15px;
+        padding: 0 0;
     }
+
 
     .searchbar-md .searchbar-input {
         padding-left: 40px;
@@ -305,11 +352,11 @@ page-stores {
         font-weight: 700;
 
         color: black;
-        background: #3e3b3b;
+        background: #ecebeb;
     }
 
     .item-md p {
-        margin: 0 0 2px;
+        margin: 0 20px 2px;
         margin-top: 8px;
         overflow: inherit;
 
@@ -317,6 +364,41 @@ page-stores {
         line-height: normal;
 
         text-overflow: inherit;
+    }
+
+    .item-md p.address {
+        font-size: 14px;
+        line-height: 1.8;
+
+        color: #5a5858;
+    }
+
+    .time-distance,
+    .distance {
+        padding: 4px 10px;
+        margin: 9px 8px 9px 0 !important;
+        margin-right: 0 !important;
+        margin-left: 20px !important;
+
+        font-size: 12px;
+        font-weight: 400;
+
+        color: white !important;
+        background: #009688;
+    }
+
+    ion-item.item.item-block.item-md {
+        background: #f3f3f3;
+    }
+
+    ion-card.item.item-block.card.card-md.item-md {
+        margin: 14px;
+    }
+
+    .distance {
+        margin-left: 0 !important;
+
+        background: #026f65;
     }
 
     .tabs-md .tab-button[aria-selected=true] .tab-button-icon {

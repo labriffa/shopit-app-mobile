@@ -17,10 +17,6 @@ import { DistanceToGo } from '../pipes/distance-to-go.pipe';
 import { ProductsPage } from '../pages/products/products';
 import { StoresPage } from '../pages/stores/stores';
 import { HomePage } from '../pages/home/home';
-import { SinglePage } from '../pages/single/single';
-import { LoginPage } from '../pages/login/login';
-import { RegisterPage } from '../pages/register/register';
-import { SavedSearchesPage } from '../pages/saved-searches/saved-searches';
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -32,6 +28,7 @@ import { GoogleVision } from '../providers/googlevision/googlevision';
 import { Percolator } from '../providers/percolator/percolator';
 
 import { FIREBASE_CONFIG } from './app.firebase.config';
+import { SearchTermProvider } from '../providers/search-term/search-term';
 
 @NgModule({
   declarations: [
@@ -39,11 +36,7 @@ import { FIREBASE_CONFIG } from './app.firebase.config';
     ProductsPage,
     StoresPage,
     HomePage,
-    SinglePage,
     TabsPage,
-    LoginPage,
-    RegisterPage,
-    SavedSearchesPage,
     DistanceToGo,
     FixedPipe   
   ],
@@ -64,11 +57,7 @@ import { FIREBASE_CONFIG } from './app.firebase.config';
     ProductsPage,
     StoresPage,
     HomePage,
-    SinglePage,
-    TabsPage,
-    LoginPage,
-    RegisterPage,
-    SavedSearchesPage
+    TabsPage
   ],
   providers: [
     StatusBar,
@@ -83,7 +72,8 @@ import { FIREBASE_CONFIG } from './app.firebase.config';
     OneSignal,
     Camera,
     GoogleVision,
-    Percolator
+    Percolator,
+    SearchTermProvider
   ]
 })
 export class AppModule {}

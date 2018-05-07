@@ -1,29 +1,32 @@
-<ion-header class="shrinkable">
-      <ion-navbar>
-        <ion-title>{{ Home }}</ion-title>
-        <ion-icon class="search-icon" name="search"></ion-icon>
-        <ion-searchbar [hidden]="searchIsHidden"
-            [(ngModel)]="myInput"
-            [showCancelButton]="shouldShowCancel"
-            (ionInput)="onInput($event)"
-            (ionCancel)="onCancel($event)">
-        </ion-searchbar>
-     </ion-navbar>
-   </ion-header>
+<!--
+  Generated template for the SinglePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Products</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
 
 <ion-content padding>
-  <div class="product-wrap" >
-			<div class="product" *ngFor="let product of items">
-				<img src="{{ product._source.image_urls }}" alt="">
-	        	<div class="product-details">
-					<h3 class="product-title">{{ product._source.title }}</h3>
-					<p class="product-price">{{ product._source.price }}</p>
-					<button class="referal">{{ product.name }}</button>
-				</div>
-			</div>
+	<div class="product">
+		<img src="{{ product._source.image_urls }}" alt="">
+		<div class="product-info">
+			<h2 class="product-title">{{ title }}</h2>
+			<h3 class="price">{{ product._source.price }}</h3>
 		</div>
-
-	<ion-infinite-scroll *ngIf="items" (ionInfinite)="doInfinite($event)">
-   		<ion-infinite-scroll-content></ion-infinite-scroll-content>
- 	</ion-infinite-scroll>
+	</div>
+	
+	<div *ngIf="stores" class="near-stores">
+		<h4>Closest Store</h4>
+		<p>{{ stores[0]._source.name }}</p>
+		<p>Address: {{ stores[0]._source.address }}</p>
+		<a href="{{ product._source.link_url }}" class="referal">View Online at {{ product.name }}</a>
+		<small>Stock Availability: Unknown</small>
+	</div>
 </ion-content>

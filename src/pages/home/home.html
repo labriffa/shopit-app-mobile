@@ -1,23 +1,27 @@
 <ion-header class="shrinkable">
   <ion-navbar>
     <ion-buttons start>
-      <button ion-button icon-only menuToggle>
-        <ion-icon name="menu"></ion-icon>
+      <button ion-button icon-only (click)="login()">
+        <ion-icon name="ios-person"></ion-icon>
       </button>
     </ion-buttons>
     <ion-icon class="search-icon" name="search"></ion-icon>
       <ion-searchbar [hidden]="searchIsHidden"
       [(ngModel)]="myInput"
       [showCancelButton]="shouldShowCancel"
-      (ionInput)="onInput($event)"
+      (keyup.enter)="stores()"
       (ionCancel)="onCancel($event)">
     </ion-searchbar>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <div id="drawpoly">
+  <div id="drawpoly" (press)="showDrawToolTip()">
     <a href=""><ion-icon name="create"></ion-icon></a>
+  </div>
+
+  <div class="drawTooltip" *ngIf="isDrawToolTip === true">
+    <p>Move your finger over the map to start drawing</p>
   </div>
 
   <div id="stopDrawing">
@@ -31,19 +35,4 @@
 
     <div #map id="map"></div>   
   </div>
-
-    <!-- <div #businesses class="businesses">
-       <ion-card ion-item *ngFor="let item of items; let i = index" (click)="itemSelected(item)">
-          <div class="card-title"><h1>{{ item.name }}</h1></div>
-
-          <ion-item class="walk-item">
-            <span item-left>  
-              {{ item.sort[0] | fixed:2 }} <span class="miles">miles</span>
-            </span>
-          </ion-item>
-          <div class="right-arrow-container">
-            <ion-icon name="ios-arrow-forward"></ion-icon>
-          </div>
-      </ion-card>
-    </div> -->
 </ion-content>

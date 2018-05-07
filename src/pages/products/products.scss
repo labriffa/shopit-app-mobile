@@ -29,6 +29,14 @@ page-products {
         background-color: #e2e2e2;
     }
 
+    .product:first-child {
+        margin-top: 0;
+    }
+
+    .product:nth-child(2) {
+        margin-top: 0;
+    }
+
     svg {
         width: 50%;
         margin: 0 25%;

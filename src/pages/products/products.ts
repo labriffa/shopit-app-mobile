@@ -5,6 +5,7 @@ import { Camera } from '@ionic-native/camera';
 import { Shopit } from '../../providers/shopit/shopit';
 import { GoogleVision } from '../../providers/googlevision/googlevision';
 import { ShopitCoordinates } from '../../providers/shopit-coordinates/shopit-coordinates';
+import { SearchTermProvider } from '../../providers/search-term/search-term';
 
 @Component({
 	selector: 'page-products',
@@ -20,7 +21,7 @@ export class ProductsPage {
 	private base64Image: string;
 
 	constructor(public navCtrl: NavController, private geolocation: Geolocation, private shopitCoordinates: ShopitCoordinates,
-		private shopit: Shopit, private camera: Camera, private googlevision: GoogleVision, private loading: LoadingController) {
+		private shopit: Shopit, private camera: Camera, private searchTerm: SearchTermProvider, private googlevision: GoogleVision, private loading: LoadingController) {
 		this.items = []; 
 		this.start = 10;
 		this.size = 10;
@@ -29,8 +30,32 @@ export class ProductsPage {
 	itemSelected(item) {
 	}
 
-	onInput(event) {
+	ionViewDidEnter() {
+		let term = this.searchTerm.get();
 
+		let loader = this.loading.create({
+			content: 'Updating Store Entries...',
+			cssClass: 'loadingwrapper'
+		});
+
+		// present the loader and make the requests
+		if(term && this.myInput != term) {
+		loader.present().then(() => {
+
+				this.myInput = term;
+
+				this.shopit.searchProducts(this.shopitCoordinates.getLat(), this.shopitCoordinates.getLng(), this.myInput, 0, 10)
+				.subscribe(data => { 
+					this.items = data ? data : []; 
+					let cart = document.getElementById("cart") as HTMLElement;
+					cart.style.display = 'none';
+					loader.dismiss();
+				});
+			});	
+		}
+	}
+
+	onInput(event) {
 		// if there is no input we don't want to perform a search!
 		if(this.myInput != '') {
 
@@ -105,6 +130,16 @@ export class ProductsPage {
 		}
 	}
 
+	single(product) {
+		this.navCtrl.push('SinglePage', {
+			product: product
+		});
+	}
+
+	/**
+    * Performs product based searching using the Google Cloud Vision API by 
+    * acquiring a user taken image  
+    **/
 	takePicture() {	
 		let options = {
 			destinationType: this.camera.DestinationType.DATA_URL,
@@ -126,5 +161,12 @@ export class ProductsPage {
 				});
 			});
 		});
+	}
+
+	/**
+    * Reduces an object to a specified set of object properties
+    **/
+	getProperty(props, obj) {
+		return props.reduce((prevObj, x) => (prevObj && prevObj[x]) ? prevObj[x] : null, obj)
 	}
 }

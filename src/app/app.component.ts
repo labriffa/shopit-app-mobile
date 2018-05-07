@@ -3,9 +3,6 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
-import { LoginPage } from '../pages/login/login';
-import { RegisterPage } from '../pages/register/register';
-import { SavedSearchesPage } from '../pages/saved-searches/saved-searches';
 
 import { TabsPage } from '../pages/tabs/tabs';
 
@@ -34,13 +31,6 @@ export class MyApp {
       //   .startInit('cb327133-55fa-4315-ab1c-59e5a2ebe064', '631149709966')
       //   .handleNotificationOpened(notitifcationOpenedCallback)
       //   .endInit();
-
-      // this.pages = [
-      //   { title: "Home", component: HomePage },
-      //   { title: "Login", component: LoginPage },
-      //   { title: "Register", component: RegisterPage },
-      //   { title: "Saved Searches", component: SavedSearchesPage }
-      // ];
     });
   }
 

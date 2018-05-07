@@ -1,144 +1,80 @@
-// Colors
-$black: #1b1d1f;
-$blue: #765dce;
-
 page-single {
-    * {
-        box-sizing: border-box;
+    .scroll-content {
+        padding-top: 30px;
+        padding-right: 0;
+        padding-left: 0;
     }
 
     img {
+        display: block;
+        display: block;
         float: left;
-        width: 160px;
-        height: 160px;
-
-        border: 2px solid #ececec;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-
-        object-fit: cover;
+        width: 50%;
+        max-width: 150px;
+        margin: 0 auto;
+        margin-bottom: 20px;
     }
 
-    .product {
-        display: flex;
-        float: left;
-    }
+    .price {
+        display: block;
+        float: right;
+        float: right;
+        margin-top: 10px;
+        margin-right: 20px;
 
-    .searchbar-md .searchbar-input {
-        width: 90%;
-        margin-left: 30px;
-
-        background-color: #e2e2e2;
-    }
-
-    .searchbar-md .searchbar-input {
-        width: 100%;
-        margin: 0;
-
-        border-radius: 5px;
-        background-color: white;
-    }
-
-    .toolbar-background {
-        background: #fff;
-    }
-
-    .toolbar-content {
-        display: flex;
-
-        align-items: center;
-    }
-
-    .search-btn {
-        color: black !important;
-    }
-
-    .searchbar-search-icon {
-        display: none;
-    }
-
-    .searchbar-md .searchbar-search-icon {
-        top: 18px;
-    }
-
-    .search-icon {
-        position: absolute;
-        top: 22px;
-        left: 27px;
-        z-index: 1;
-
+        font-size: 1.5rem;
         font-size: 20px;
 
-        color: #939393;
-    }
+        text-align: right;
 
-    .close-search,
-    .close-search:hover {
-        position: absolute;
-        top: 5px;
-        right: 7px;
-        z-index: 200;
-
-        color: #a7a7a7;
-        background: white !important;
-        box-shadow: none;
+        color: #5e5d5e;
     }
 
     .product {
-        width: 50%;
-        margin-top: 30px;
-        flex-direction: column;
-
-        text-align: center;
-
-        align-items: center;
-    }
-
-    .product-wrap {
         display: flex;
 
         align-items: center;
-        flex-wrap: wrap;
-        justify-content: center;
     }
 
-    .product-details {
-        position: relative;
+    .product-info {
+        display: flex;
+        flex-direction: column;
 
-        width: 160px;
-        min-height: 150px;
-        padding: 5px;
-
-        text-align: center;
-
-        border-bottom-right-radius: 5px;
-        border-bottom-left-radius: 5px;
-        background: #ececec;
+        flex-grow: 2;
+        justify-content: flex-end;
     }
 
     .product-title {
-        min-height: 30px;
-        padding-top: 12px;
+        display: block;
+        float: right;
+        float: right;
+        width: 50%;
+        margin-top: 1.8rem;
+        margin-right: 20px;
+        margin-left: auto;
 
-        font-size: 12px;
+        font-size: 1.5rem;
         line-height: 1.5;
 
-        white-space: normal;
+        text-align: right;
 
-        color: #3f3f3d;
+        color: #2d2d2d;
     }
 
     .referal {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-
         display: block;
-        width: 90%;
+        width: 80%;
         padding: 8px 5px;
         margin: 5%;
+        margin: 30px auto;
+        margin-top: 30px;
+        margin-bottom: 0;
 
         font-size: 13px;
+        font-size: 15px;
+
+        text-align: center;
+        text-decoration: none;
 
         color: white;
         border-radius: 5px;
@@ -146,85 +82,30 @@ page-single {
         background: #5e5e5e;
     }
 
-    [hidden] {
-        display: none !important;
-    }
-
-    .scroll-content {
-        background: white;
-    }
-
-    .toolbar .searchbar-md {
-        padding: 0 !important;
-    }
-
-    .toolbar .searchbar-md {
-        height: 56px !important;
-        padding: 10px !important;
-    }
-
-
-    .searchbar-md .searchbar-input {
-        padding-left: 40px;
-
-        border-radius: 0;
-        background-color: #ecebeb;
-        box-shadow: none !important;
-    }
-
-    .hamburger-menu {
-        margin-left: 15px;
-    }
-
-    .back-button.show-back-button {
-        display: none;;
-    }
-
-    .product-price {
-        display: inline-block;
-        width: auto;
-        margin: 0 0 15px 0;
-
-        font-size: 16px;
-        font-weight: 700;
-
-        color: #3f3f3d;
-
-        align-self: flex-start;
-    }
-
-    .list-md .item-block .item-inner {
-        border: none;
-    }
-
-    .item-md {
-        padding: 0;
-
-        background: #eaeaea;
-    }
-
-    .label-md {
-        margin: 0;
-    }
-
-    .business-title {
-        display: inline-block;
-        margin: 0;
-
-        font-size: 18px;
-
-        color: white;
-    }
-
-    .tabs-md .tab-button[aria-selected=true] .tab-button-icon {
-        color: $black;
-    }
-
-    .no-more-results {
-        margin-top: 50px;
+    .near-stores {
+        float: left;
+        width: 100%;
+        padding: 19px;
 
         text-align: center;
 
-        color: #6b6b6b;
+        border-radius: 3px;
+        background: #f1f1f1;
+
+        small {
+            display: block;
+            margin-top: 30px;
+
+            font-size: 14px;
+
+            color: #616161;
+        }
+
+        h4 {
+            font-size: 16px;
+            font-weight: 700;
+
+            color: #464646;
+        }
     }
 }

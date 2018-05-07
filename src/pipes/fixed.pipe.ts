@@ -2,7 +2,7 @@ import { Pipe } from '@angular/core';
 
 @Pipe({name: 'fixed'})
 export class FixedPipe {
-  transform (input:number) {
-    return input.toFixed(2);
+  transform (input:number, fixed:number) {
+    return input.toFixed(fixed);
   }
 }

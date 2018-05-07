@@ -21,7 +21,7 @@ export class DistanceToGo implements PipeTransform {
 			Math.cos(lat1) * Math.cos(lat2) * Math.pow( Math.sin( (lng2 - lng1) / 2 ), 2 ) ) 
 		);
 
-		var walkingTime: number = d * 15;
+		var walkingTime: number = d * 20;
 
 		let newStr: string = `${Math.ceil(parseInt(walkingTime.toFixed(1)))} min (${ d.toFixed(2) } miles)`;
 		return newStr;

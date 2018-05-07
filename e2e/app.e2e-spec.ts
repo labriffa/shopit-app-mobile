@@ -63,7 +63,7 @@ describe('E2E Test Suite', () => {
       expect(element.all(by.css('.gm-style-iw')).get(1).isPresent());
     });
   });
-
+    
   it('drawing a polygon search should trigger the loading modal', () => {
     element(by.css('#drawpoly')).click();
     var map = element(by.css('#map'));
