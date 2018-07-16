@@ -36,27 +36,19 @@ export class HomePage {
      * Loads the businesses according to the user's current location
      **/
      initializeItems() {
-        // development values
-        if(1) {
-        //if (this.platform.is('core') || this.platform.is('mobileweb')) {
-            this.shopitcoordinates.setLat(53.494542);
-            this.shopitcoordinates.setLng(-2.271309);
-            this.searchBusinesses();
-        } else {
-            // retrieve the users' current position
-            this.geolocation.getCurrentPosition().then((resp) => {
-                const lat = resp.coords.latitude;
-                const lng = resp.coords.longitude;
+        // retrieve the users' current position
+        this.geolocation.getCurrentPosition().then((resp) => {
+        const lat = resp.coords.latitude;
+        const lng = resp.coords.longitude;
 
-                this.shopitcoordinates.setLat(lat);
-                this.shopitcoordinates.setLng(lng);
+        this.shopitcoordinates.setLat(lat);
+        this.shopitcoordinates.setLng(lng);
 
-                this.searchBusinesses();
+        this.searchBusinesses();
 
-            }).catch((error) => {
-                console.log('Error getting location', error);
-            });
-        }        
+        }).catch((error) => {
+            console.log('Error getting location', error);
+        });
     }
 
     /**
@@ -119,25 +111,15 @@ export class HomePage {
      * Intializes the map and sets styles
      **/
      loadMap() {
-        // development values
-        if(1) {
-        //if(this.platform.is('core') || this.platform.is('mobileweb')) {
-            let latLng = new google.maps.LatLng(this.shopitcoordinates.getLat(), this.shopitcoordinates.getLng());
+         this.geolocation.getCurrentPosition().then((position) => {
+
+            let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
             this.initializeMap(latLng);
-            
 
-        } else {
-            this.geolocation.getCurrentPosition().then((position) => {
-
-                let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
-                this.initializeMap(latLng);
-
-            }, (err) => {
-                console.log(err);
-            });
-        }
+         }, (err) => {
+            console.log(err);
+         });
     }
 
      /**
@@ -360,7 +342,10 @@ export class HomePage {
             this.enableMap();
     	})
     }
-
+    
+    /**
+    * Extracts coordinates from the bounds of a given polygon
+    **/
     getCoordinatesFromBounds(bounds) {
 
         let coordinates = [];
@@ -503,11 +488,17 @@ export class HomePage {
      		this.mapMarkers[i].setMap(null);
      	}
      }
-
+     
+     /**
+     * Displays the Login Page
+     **/
      login() {
         this.navCtrl.push('LoginPage');
      }
-
+      
+     /**
+     * Displays the Stores Page
+     **/
      stores() {
         this.searchTerm.set(this.myInput);
         this.navCtrl.parent.select(2); 
