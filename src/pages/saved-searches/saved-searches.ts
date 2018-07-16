@@ -23,11 +23,10 @@ export class SavedSearchesPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private percolator: Percolator, 
   	private oneSignal: OneSignal, private afAuth: AngularFireAuth) {
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SavedSearchesPage');
-  }
-
+  
+  /**
+  * Add a user saved query to the web percolator service
+  **/
   saveQuery() {
   	this.oneSignal.getIds().then(ids => { 
     	let oneId = ids['userId'];   
