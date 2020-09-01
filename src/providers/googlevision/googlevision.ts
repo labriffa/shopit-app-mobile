@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment, GOOGLE_VISION_API_KEY } from '../../environments/environment';
 
 import 'rxjs/add/operator/map'
 
 @Injectable()
 export class GoogleVision {
 
-	readonly API_ENDPOINT = 'https://vision.googleapis.com/v1/images:annotate?key=AIzaSyDVyFqzbBNaY43EThMkJN5lrsEaFDqj3XU';
+	readonly API_ENDPOINT = GOOGLE_VISION_API_KEY;
 
 	constructor(public http: HttpClient) { }
 
