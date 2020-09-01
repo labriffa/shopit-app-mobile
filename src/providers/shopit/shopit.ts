@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment, SHOPIT_API_ENDPOINT } from '../../environments/environment';
 
 import 'rxjs/add/operator/map'
 
 @Injectable()
 export class Shopit {
 
-	readonly API_ENDPOINT = 'http://ec2-35-178-130-149.eu-west-2.compute.amazonaws.com:9000/api';
-	//readonly API_ENDPOINT = 'http://localhost:9000/api';
+	readonly API_ENDPOINT = SHOPIT_API_ENDPOINT;
 	readonly API_SEARCH_BUSINESSES_METHOD = '/businesses';
 	readonly API_SEARCH_PRODUCTS_METHOD = '/products';
 
